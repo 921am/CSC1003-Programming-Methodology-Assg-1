@@ -2,6 +2,8 @@
 #include <stdlib.h>
 #include <math.h>
 
+#define GNUPLOT "/usr/local/Cellar/gnuplot/5.2.7_1/bin/gnuplot -persist" // change this based on where your gnuplot executable file is located. To locate it, type `brew ls gnuplot` in the terminal
+
 int main()
 {
     double coordX[10000];
@@ -97,6 +99,21 @@ int main()
     printf("y = %0.2f + %0.2fx\n", b0, b1);
     printf("sum of x and y: %0.2f and %0.2f\n", sumX, sumY);
     printf("Mean of x and y: %0.2f and %0.2f\n", xMean, yMean);
-   
+
+    // Plot graph
+    FILE *gp;
+    gp = popen(GNUPLOT, "w"); // pipe to gnuplot program
+    if (gp == NULL) {
+        printf("Error opening pipe to GNU plot.\n"
+            "Install with 'sudo apt-get install gnuplot' or 'brew install gnuplot'.\n");
+        exit(0);
+    }
+
+    fprintf(gp, "set datafile separator comma\n");
+    fprintf(gp, "plot '/Users/clarence/Desktop/Group9_15.txt', y=%fx+%f2\n", b1, b0);
+    // TODO: fix issue where the filename cannot be read based on user input
+    // fprintf(gp, "plot '%s', y=%fx+%f2\n", filename, b1, b0);
+    fclose(gp);
+
     return 0;
 }
