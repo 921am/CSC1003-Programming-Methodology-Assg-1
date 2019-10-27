@@ -13,9 +13,8 @@ int main()
 {
     double coordX[10000];
     double coordY[10000];
-    float tempX, tempY;
     char x[1000], *y, countChar;
-    FILE *fptr, *emptyfptr, *yCoordfptr;
+    FILE *fptr;
     int count = 0;
 
     //declare the delim
@@ -30,7 +29,7 @@ int main()
     {
         printf("Error! opening file\n");
         // Program exits if file pointer returns NULL.
-        exit(1);         
+        exit(1);
     }
 
     //loop while countChar is not at the End of File
@@ -63,14 +62,13 @@ int main()
     }
 
     fclose(fptr); //close file.
-    // printf("There are %d lines \n", count);
     //end of pulling coordinates from file
 
 
 
     //linear regregession calculation
-    float sumX = 0.0, sumY = 0.0, xMean, yMean, numer, denom, b0, b1;
-    float  xMeandiff[5], yMeandiff[5];
+    float sumX = 0.0, sumY = 0.0, xMean, yMean, numer = 0.0, denom = 0.0, b0, b1;
+    float xMeandiff[5], yMeandiff[5];
     int n = sizeof(coordY)/sizeof(coordY[0]);
 
     for (int i = 0; i < n; i++)
@@ -106,7 +104,7 @@ int main()
     printf("Mean of x and y: %0.2f and %0.2f\n", xMean, yMean);
     printf("The coefficient of determination is %0.2f\n", b1);
 
-    plotGraph(b1, b0);    
+    plotGraph(b1, b0);
 
     return 0;
 }
