@@ -68,7 +68,7 @@ int main()
 
     //linear regregession calculation
     float sumX = 0.0, sumY = 0.0, xMean, yMean, numer = 0.0, denom = 0.0, b0, b1;
-    float xMeandiff[5], yMeandiff[5];
+    float xMeandiff[10000], yMeandiff[10000];
     int n = sizeof(coordY)/sizeof(coordY[0]);
 
     for (int i = 0; i < n; i++)
