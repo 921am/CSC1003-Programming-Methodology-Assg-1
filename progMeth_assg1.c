@@ -64,28 +64,45 @@ int main()
     //end of pulling coordinates from file
 
 
+    
+    float sumX = 0.0, sumY = 0.0, xMean, yMean, numer = 0.0, denom = 0.0, b0, b1; // variables needed for calculating equation for the regression line
+    float sumXY, sumXSq, sumYSq, sqSumX, sqSumY, r, rSq; // variables needed for calculating correlation coefficient & coefficient of determination
 
-    //linear regregession calculation
-    float sumX = 0.0, sumY = 0.0, xMean, yMean, numer = 0.0, denom = 0.0, b0, b1;
     int n = sizeof(coordY)/sizeof(coordY[0]);
 
     for (int i = 0; i < n; i++)
     {
-        //sum all x and Y
-        sumX = sumX + coordX[i];
-        sumY = sumY + coordY[i];
+        float x = coordX[i];
+        float y = coordY[i];
+
+        // calculate all summations needed
+        sumX += x;
+        sumY += y;
+        sumXY += x*y;
+        sumXSq += pow(x, 2);
+        sumYSq += pow(y, 2);
     }
+
+    // calculate square of the summation of x
+    sqSumX += pow(sumX, 2);
+    // calculate square of the summation of y
+    sqSumY += pow(sumY, 2);
 
     //calculate the mean of x and y
     xMean = sumX / n;
     yMean = sumY / n;
 
+    // Calculate correlation coefficient (r)
+    float rNumer = (10000*sumXY)-(sumX*sumY);
+    float rDenom = sqrt(((10000*sumXSq)-(sqSumX))*((10000*sumYSq)-sqSumY));
+    r = rNumer/rDenom;
+    rSq = pow(r, 2);
+
     for (int i = 0; i < n; i++)
     {
-        float xMinusXMean, yMinusYMean;
         //calculate x-xMean and y-yMean
-        xMinusXMean = coordX[i] - xMean;
-        yMinusYMean = coordY[i] - yMean;
+        float xMinusXMean = coordX[i] - xMean;
+        float yMinusYMean = coordY[i] - yMean;
 
         //calculate the denominator of equation (x - xMean)^2
         denom += pow(xMinusXMean, 2);
@@ -101,7 +118,8 @@ int main()
     printf("y = %0.2f + %0.2fx\n", b0, b1);
     printf("sum of x and y: %0.2f and %0.2f\n", sumX, sumY);
     printf("Mean of x and y: %0.2f and %0.2f\n", xMean, yMean);
-    printf("The coefficient of determination is %0.2f\n", b1);
+    printf("The correlation coefficient is %0.2f\n", r);
+    printf("The coefficient of determination is %0.2f\n", rSq);
 
     plotGraph(b1, b0);
 
