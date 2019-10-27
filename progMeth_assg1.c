@@ -4,21 +4,23 @@
 
 #define GNUPLOT "/usr/local/Cellar/gnuplot/5.2.7_1/bin/gnuplot -persist" // change this based on where your gnuplot executable file is located. To locate it, type `brew ls gnuplot` in the terminal
 
+char DATASET_FILEPATH[1000];
+
 int main()
 {
     double coordX[10000];
     double coordY[10000];
     float tempX, tempY;
-    char x[1000], *y, countChar, filename[1000];
+    char x[1000], *y, countChar;
     FILE *fptr, *emptyfptr, *yCoordfptr;
     int count = 0;
 
     //declare the delim
     const char delim[2] = ",";
 
-    printf("\nPlease enter file name:");
-    scanf("%s", &filename);
-    fptr = fopen(filename, "r");
+    printf("\nPlease enter the file path for your dataset: ");
+    scanf("%s", &DATASET_FILEPATH);
+    fptr = fopen(DATASET_FILEPATH, "r");
 
     // file path of Mag's desktop - /Users/magdalene/Desktop/SIT-UofG/programMeth/progMeth_assg1/Group9_15.txt
     if (fptr == NULL)
@@ -110,9 +112,7 @@ int main()
     }
 
     fprintf(gp, "set datafile separator comma\n");
-    fprintf(gp, "plot '/Users/clarence/Desktop/Group9_15.txt', y=%fx+%f2\n", b1, b0);
-    // TODO: fix issue where the filename cannot be read based on user input
-    // fprintf(gp, "plot '%s', y=%fx+%f2\n", filename, b1, b0);
+    fprintf(gp, "plot '%s', y=%fx+%f2\n", DATASET_FILEPATH, b1, b0);
     fclose(gp);
 
     return 0;
