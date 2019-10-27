@@ -11,7 +11,8 @@ int main()
     FILE *fptr, *emptyfptr, *yCoordfptr;
     int count = 0;
 
-    const char s[2] = ",";
+    //declare the delim
+    const char delim[2] = ",";
 
     printf("\nPlease enter file name:");
     scanf("%s", &filename);
@@ -21,20 +22,6 @@ int main()
     if (fptr == NULL)
     {
         printf("Error! opening file\n");
-        // Program exits if file pointer returns NULL.
-        exit(1);         
-    }
-
-    if ((emptyfptr = fopen("/Users/magdalene/Desktop/SIT-UofG/programMeth/progMeth_assg1/empty.txt", "w")) == NULL)
-    {
-        printf("Error! opening file");
-        // Program exits if file pointer returns NULL.
-        exit(1);         
-    }
-
-    if ((yCoordfptr = fopen("/Users/magdalene/Desktop/SIT-UofG/programMeth/progMeth_assg1/yCoord.txt", "w")) == NULL)
-    {
-        printf("Error! opening file");
         // Program exits if file pointer returns NULL.
         exit(1);         
     }
@@ -52,35 +39,24 @@ int main()
         fscanf(fptr,"%10000s[^\n]", x);
 
         //get the first token (getting the y coordinates)
-        y = strtok(x, s);
+        y = strtok(x, delim);
         
         // walk through other tokens while the token is null
         while( y != NULL ) {
             //printf( " %s\n", token );
             coordY[count] = atof(y); //store token to the coordY for every count
-            y = strtok(NULL, s); //make the token null after storing
+            y = strtok(NULL, delim); //make the token null after storing
         }
 
-        //write to txt file
-        fprintf(emptyfptr,"%s\n",x);
+        //store the x coorindates in array coordX
         coordX[count] = atof(x);
 
         //take next character from file.
         countChar = getc(fptr);
     }
 
-    for (int i = 0; i < count; i++)
-    {
-        //printf("these are the X coordinates: %lf\n", coordX[i]);
-        //printf("these are the Y coordinates: %lf\n", coordY[i]);
-
-        //Write to yCoord.txt
-        fprintf(yCoordfptr,"%lf\n",coordY[i]);
-    }
-
     fclose(fptr); //close file.
-    fclose(emptyfptr);
-    printf("There are %d lines \n", count);
+    // printf("There are %d lines \n", count);
     //end of pulling coordinates from file
 
 
