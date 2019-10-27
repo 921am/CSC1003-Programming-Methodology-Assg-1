@@ -7,6 +7,8 @@
 
 char DATASET_FILEPATH[1000];
 
+void plotGraph(float slope, float yIntercept);
+
 int main()
 {
     double coordX[10000];
@@ -40,7 +42,7 @@ int main()
             count = count + 1;
         }
 
-        //get the x coordinates adn store in x
+        //get the x coordinates and store in x
         fscanf(fptr,"%10000s[^\n]", x);
 
         //get the first token (getting the y coordinates)
@@ -104,6 +106,13 @@ int main()
     printf("Mean of x and y: %0.2f and %0.2f\n", xMean, yMean);
     printf("The coefficient of determination is %0.2f\n", b1);
 
+    plotGraph(b1, b0);    
+
+    return 0;
+}
+
+void plotGraph(float slope, float yIntercept)
+{
     // Plot graph
     FILE *gp;
     gp = popen(GNUPLOT, "w"); // pipe to gnuplot program
@@ -114,8 +123,7 @@ int main()
     }
 
     fprintf(gp, "set datafile separator comma\n");
-    fprintf(gp, "plot '%s', y=%0.2fx+%0.2f\n", DATASET_FILEPATH, b1, b0);
+    fprintf(gp, "plot '%s', y=%0.2fx+%0.2f\n", DATASET_FILEPATH, slope, yIntercept);
     fclose(gp);
 
-    return 0;
 }
