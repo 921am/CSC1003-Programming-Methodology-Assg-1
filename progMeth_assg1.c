@@ -11,8 +11,7 @@ void plotGraph(float slope, float yIntercept);
 
 int main()
 {
-    double coordX[10000];
-    double coordY[10000];
+    float coordX[10000], coordY[10000];
     char x[1000], *y, countChar;
     FILE *fptr;
     int count = 0;
@@ -50,12 +49,12 @@ int main()
         // walk through other tokens while the token is null
         while( y != NULL ) {
             //printf( " %s\n", token );
-            coordY[count] = atof(y); //store token to the coordY for every count
+            coordY[count] = (float)atof(y); //store token to the coordY for every count
             y = strtok(NULL, delim); //make the token null after storing
         }
 
         //store the x coorindates in array coordX
-        coordX[count] = atof(x);
+        coordX[count] = (float)atof(x);
 
         //take next character from file.
         countChar = getc(fptr);
