@@ -101,6 +101,7 @@ int main()
     printf("y = %0.2f + %0.2fx\n", b0, b1);
     printf("sum of x and y: %0.2f and %0.2f\n", sumX, sumY);
     printf("Mean of x and y: %0.2f and %0.2f\n", xMean, yMean);
+    printf("The coefficient of determination is %0.2f\n", b1);
 
     // Plot graph
     FILE *gp;
@@ -112,7 +113,7 @@ int main()
     }
 
     fprintf(gp, "set datafile separator comma\n");
-    fprintf(gp, "plot '%s', y=%fx+%f2\n", DATASET_FILEPATH, b1, b0);
+    fprintf(gp, "plot '%s', y=%0.2fx+%0.2f2\n", DATASET_FILEPATH, b1, b0);
     fclose(gp);
 
     return 0;
