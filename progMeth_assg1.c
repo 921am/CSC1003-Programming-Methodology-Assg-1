@@ -7,17 +7,20 @@ int main()
     double coordX[10000];
     double coordY[10000];
     float tempX, tempY;
-    char x[1000];
-    char countChar;
+    char x[1000], *y, countChar, filename[1000];
     FILE *fptr, *emptyfptr, *yCoordfptr;
     int count = 0;
 
     const char s[2] = ",";
-    char *y;
 
-    if ((fptr = fopen("/Users/magdalene/Desktop/SIT-UofG/programMeth/progMeth_assg1/Group9_15.txt", "r")) == NULL)
+    printf("\nPlease enter file name:");
+    scanf("%s", &filename);
+    fptr = fopen(filename, "r");
+
+    // file path of Mag's desktop - /Users/magdalene/Desktop/SIT-UofG/programMeth/progMeth_assg1/Group9_15.txt
+    if (fptr == NULL)
     {
-        printf("Error! opening file");
+        printf("Error! opening file\n");
         // Program exits if file pointer returns NULL.
         exit(1);         
     }
