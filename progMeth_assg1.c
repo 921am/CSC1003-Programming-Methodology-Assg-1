@@ -68,7 +68,6 @@ int main()
 
     //linear regregession calculation
     float sumX = 0.0, sumY = 0.0, xMean, yMean, numer = 0.0, denom = 0.0, b0, b1;
-    float xMeandiff[10000], yMeandiff[10000];
     int n = sizeof(coordY)/sizeof(coordY[0]);
 
     for (int i = 0; i < n; i++)
@@ -84,15 +83,16 @@ int main()
 
     for (int i = 0; i < n; i++)
     {
+        float xMinusXMean, yMinusYMean;
         //calculate x-xMean and y-yMean
-        xMeandiff[i] = coordX[i] - xMean;
-        yMeandiff[i] = coordY[i] - yMean;
+        xMinusXMean = coordX[i] - xMean;
+        yMinusYMean = coordY[i] - yMean;
 
         //calculate the denominator of equation (x - xMean)^2
-        denom += pow(xMeandiff[i], 2);
+        denom += pow(xMinusXMean, 2);
 
         //calculate the numeration (x-xMean)*(y-yMean)
-        numer += xMeandiff[i] * yMeandiff[i];
+        numer += xMinusXMean * yMinusYMean;
     }
 
     //calculate b0 and b1
