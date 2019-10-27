@@ -4,6 +4,7 @@
 #include <string.h>
 
 #define GNUPLOT "/usr/local/Cellar/gnuplot/5.2.7_1/bin/gnuplot -persist" // change this based on where your gnuplot executable file is located. To locate it, type `brew ls gnuplot` in the terminal
+#define N 10000 // The amount of values in the dataset
 
 char DATASET_FILEPATH[1000];
 
@@ -11,7 +12,7 @@ void plotGraph(float slope, float yIntercept);
 
 int main()
 {
-    float coordX[10000], coordY[10000];
+    float coordX[N], coordY[N];
     char x[1000], *y, countChar;
     FILE *fptr;
     int count = 0;
@@ -68,9 +69,7 @@ int main()
     float sumX = 0.0, sumY = 0.0, xMean, yMean, numer = 0.0, denom = 0.0, b0, b1; // variables needed for calculating equation for the regression line
     float sumXY, sumXSq, sumYSq, sqSumX, sqSumY, r, rSq; // variables needed for calculating correlation coefficient & coefficient of determination
 
-    int n = sizeof(coordY)/sizeof(coordY[0]);
-
-    for (int i = 0; i < n; i++)
+    for (int i = 0; i < N; i++)
     {
         float x = coordX[i];
         float y = coordY[i];
@@ -89,16 +88,16 @@ int main()
     sqSumY += pow(sumY, 2);
 
     //calculate the mean of x and y
-    xMean = sumX / n;
-    yMean = sumY / n;
+    xMean = sumX / N;
+    yMean = sumY / N;
 
     // Calculate correlation coefficient (r)
-    float rNumer = (10000*sumXY)-(sumX*sumY);
-    float rDenom = sqrt(((10000*sumXSq)-(sqSumX))*((10000*sumYSq)-sqSumY));
+    float rNumer = (N*sumXY)-(sumX*sumY);
+    float rDenom = sqrt(((N*sumXSq)-(sqSumX))*((N*sumYSq)-sqSumY));
     r = rNumer/rDenom;
     rSq = pow(r, 2);
 
-    for (int i = 0; i < n; i++)
+    for (int i = 0; i < N; i++)
     {
         //calculate x-xMean and y-yMean
         float xMinusXMean = coordX[i] - xMean;
