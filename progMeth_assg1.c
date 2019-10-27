@@ -114,7 +114,7 @@ int main()
     }
 
     fprintf(gp, "set datafile separator comma\n");
-    fprintf(gp, "plot '%s', y=%0.2fx+%0.2f2\n", DATASET_FILEPATH, b1, b0);
+    fprintf(gp, "plot '%s', y=%0.2fx+%0.2f\n", DATASET_FILEPATH, b1, b0);
     fclose(gp);
 
     return 0;
