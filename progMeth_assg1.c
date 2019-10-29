@@ -66,7 +66,7 @@ int main()
 
 
     
-    float sumX = 0.0, sumY = 0.0, xMean, yMean, numer = 0.0, denom = 0.0, b0, b1; // variables needed for calculating equation for the regression line
+    float sumX = 0.0, sumY = 0.0, xMean, yMean, slopeNumer = 0.0, slopeDenom = 0.0, b0, b1; // variables needed for calculating equation for the regression line
     float sumXY, sumXSq, sumYSq, sqSumX, sqSumY, correlationCoefficient, coefficientOfDetermination; // variables needed for calculating correlation coefficient & coefficient of determination
 
     for (int i = 0; i < N; i++)
@@ -103,15 +103,13 @@ int main()
         float xMinusXMean = coordX[i] - xMean;
         float yMinusYMean = coordY[i] - yMean;
 
-        //calculate the denominator of equation (x - xMean)^2
-        denom += pow(xMinusXMean, 2);
-
-        //calculate the numeration (x-xMean)*(y-yMean)
-        numer += xMinusXMean * yMinusYMean;
+        //calculate the numerator & denominator of regression slope equation
+        slopeNumer += xMinusXMean * yMinusYMean;
+        slopeDenom += pow(xMinusXMean, 2);
     }
 
-    //calculate b0 and b1
-    b1 = numer / denom;
+    //calculate b0 (y-intercept) and b1 (slope) of regression line
+    b1 = slopeNumer / slopeDenom;
     b0 = yMean - (b1*xMean);
 
     printf("y = %0.2f + %0.2fx\n", b0, b1);
