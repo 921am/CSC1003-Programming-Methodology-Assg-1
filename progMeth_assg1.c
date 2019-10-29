@@ -16,8 +16,14 @@ int main()
 {
     readDataFromFile();
     
-    float sumX = 0.0, sumY = 0.0, xMean, yMean, slopeNumer = 0.0, slopeDenom = 0.0, b0, b1; // variables needed for calculating equation for the regression line
-    float sumXY, sumXSq, sumYSq, sqSumX, sqSumY, correlationCoefficient, coefficientOfDetermination; // variables needed for calculating correlation coefficient & coefficient of determination
+    // variables needed for calculating equation for the regression line
+    float sumX = 0.0, sumY = 0.0, xMean, yMean, slopeNumer = 0.0, slopeDenom = 0.0, b0, b1;
+
+    // variables needed for calculating correlation coefficient & coefficient of determination
+    float sumXY, sumXSq, sumYSq, sqSumX, sqSumY, correlationCoefficient, coefficientOfDetermination;
+    
+    // variables needed for calculating standard error
+    float stdError, stdDev, stdDevNumer;
 
     for (int i = 0; i < N; i++)
     {
@@ -49,14 +55,18 @@ int main()
 
     for (int i = 0; i < N; i++)
     {
-        //calculate x-xMean and y-yMean
         float xMinusXMean = X_VALUES[i] - xMean;
         float yMinusYMean = Y_VALUES[i] - yMean;
 
-        //calculate the numerator & denominator of regression slope equation
+        // calculate the numerator & denominator of regression slope equation
         slopeNumer += xMinusXMean * yMinusYMean;
         slopeDenom += pow(xMinusXMean, 2);
     }
+
+    // calculate standard error
+    stdDevNumer = slopeDenom; // the numerator for the standard deviation equation is the same as the denominator of regression slope equation
+    stdDev = sqrt(stdDevNumer / (N-1));
+    stdError = stdDev/sqrt(N);
 
     //calculate b0 (y-intercept) and b1 (slope) of regression line
     b1 = slopeNumer / slopeDenom;
@@ -67,6 +77,7 @@ int main()
     printf("Mean of x and y: %0.2f and %0.2f\n", xMean, yMean);
     printf("The correlation coefficient is %0.2f\n", correlationCoefficient);
     printf("The coefficient of determination is %0.2f%%\n", coefficientOfDetermination);
+    printf("The standard error is %f\n", stdError);
 
     plotGraph(b1, b0);
 
@@ -140,6 +151,8 @@ void plotGraph(float slope, float yIntercept)
 
     fprintf(gp, "set datafile separator comma\n");
     fprintf(gp, "f(x) = m*x + b\n");
+    fprintf(gp, "set fit quiet\n"); // disables automatic output values from GNUPlot
+    fprintf(gp, "set fit logfile '/dev/null'\n"); // disables GNUPlot from generating a logfile
     fprintf(gp, "fit f(x) '%s' using 1:2 via m, b\n", DATASET_FILEPATH);
     fprintf(gp, "plot '%s', f(x) title 'Regression Line y=%0.2fx+%0.2f'\n", DATASET_FILEPATH, slope, yIntercept);
     fclose(gp);
