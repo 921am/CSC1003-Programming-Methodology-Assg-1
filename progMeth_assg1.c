@@ -7,64 +7,14 @@
 #define N 10000 // The amount of values in the dataset
 
 char DATASET_FILEPATH[1000];
+float coordX[N], coordY[N];
 
+void readDataFromFile();
 void plotGraph(float slope, float yIntercept);
 
 int main()
 {
-    float coordX[N], coordY[N];
-    char x[1000], *y, countChar;
-    FILE *fptr;
-    int count = 0;
-
-    //declare the delim
-    const char delim[2] = ",";
-
-    printf("\nPlease enter the file path for your dataset: ");
-    scanf("%s", &DATASET_FILEPATH);
-    fptr = fopen(DATASET_FILEPATH, "r");
-
-    // file path of Mag's desktop - /Users/magdalene/Desktop/SIT-UofG/programMeth/progMeth_assg1/Group9_15.txt
-    if (fptr == NULL)
-    {
-        printf("Error! opening file\n");
-        // Program exits if file pointer returns NULL.
-        exit(1);
-    }
-
-    //loop while countChar is not at the End of File
-    while (countChar != EOF)
-    {
-        //Count whenever new line is encountered
-        if (countChar == '\n')
-        {
-            count = count + 1;
-        }
-
-        //get the x coordinates and store in x
-        fscanf(fptr,"%10000s[^\n]", x);
-
-        //get the first token (getting the y coordinates)
-        y = strtok(x, delim);
-        
-        // walk through other tokens while the token is null
-        while( y != NULL ) {
-            //printf( " %s\n", token );
-            coordY[count] = (float)atof(y); //store token to the coordY for every count
-            y = strtok(NULL, delim); //make the token null after storing
-        }
-
-        //store the x coorindates in array coordX
-        coordX[count] = (float)atof(x);
-
-        //take next character from file.
-        countChar = getc(fptr);
-    }
-
-    fclose(fptr); //close file.
-    //end of pulling coordinates from file
-
-
+    readDataFromFile();
     
     float sumX = 0.0, sumY = 0.0, xMean, yMean, slopeNumer = 0.0, slopeDenom = 0.0, b0, b1; // variables needed for calculating equation for the regression line
     float sumXY, sumXSq, sumYSq, sqSumX, sqSumY, correlationCoefficient, coefficientOfDetermination; // variables needed for calculating correlation coefficient & coefficient of determination
@@ -121,6 +71,60 @@ int main()
     plotGraph(b1, b0);
 
     return 0;
+}
+
+void readDataFromFile()
+{
+    char x[1000], *y, countChar;
+    FILE *fptr;
+    int count = 0;
+
+    //declare the delim
+    const char delim[2] = ",";
+
+    printf("\nPlease enter the file path for your dataset: ");
+    scanf("%s", &DATASET_FILEPATH);
+    fptr = fopen(DATASET_FILEPATH, "r");
+
+    // file path of Mag's desktop - /Users/magdalene/Desktop/SIT-UofG/programMeth/progMeth_assg1/Group9_15.txt
+    if (fptr == NULL)
+    {
+        printf("Error! opening file\n");
+        // Program exits if file pointer returns NULL.
+        exit(1);
+    }
+
+    //loop while countChar is not at the End of File
+    while (countChar != EOF)
+    {
+        //Count whenever new line is encountered
+        if (countChar == '\n')
+        {
+            count = count + 1;
+        }
+
+        //get the x coordinates and store in x
+        fscanf(fptr,"%10000s[^\n]", x);
+
+        //get the first token (getting the y coordinates)
+        y = strtok(x, delim);
+        
+        // walk through other tokens while the token is null
+        while( y != NULL ) {
+            //printf( " %s\n", token );
+            coordY[count] = (float)atof(y); //store token to the coordY for every count
+            y = strtok(NULL, delim); //make the token null after storing
+        }
+
+        //store the x coorindates in array coordX
+        coordX[count] = (float)atof(x);
+
+        //take next character from file.
+        countChar = getc(fptr);
+    }
+
+    fclose(fptr); //close file.
+    //end of pulling coordinates from file
 }
 
 void plotGraph(float slope, float yIntercept)
