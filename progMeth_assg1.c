@@ -137,7 +137,9 @@ void plotGraph(float slope, float yIntercept)
     }
 
     fprintf(gp, "set datafile separator comma\n");
-    fprintf(gp, "plot '%s', y=%0.2fx+%0.2f\n", DATASET_FILEPATH, slope, yIntercept);
+    fprintf(gp, "f(x) = m*x + b\n");
+    fprintf(gp, "fit f(x) '%s' using 1:2 via m, b\n", DATASET_FILEPATH);
+    fprintf(gp, "plot '%s', f(x) title 'Regression Line y=%0.2fx+%0.2f'\n", DATASET_FILEPATH, slope, yIntercept);
     fclose(gp);
 
 }
