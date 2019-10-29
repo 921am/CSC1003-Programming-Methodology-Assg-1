@@ -67,7 +67,7 @@ int main()
 
     
     float sumX = 0.0, sumY = 0.0, xMean, yMean, numer = 0.0, denom = 0.0, b0, b1; // variables needed for calculating equation for the regression line
-    float sumXY, sumXSq, sumYSq, sqSumX, sqSumY, r, rSq; // variables needed for calculating correlation coefficient & coefficient of determination
+    float sumXY, sumXSq, sumYSq, sqSumX, sqSumY, correlationCoefficient, coefficientOfDetermination; // variables needed for calculating correlation coefficient & coefficient of determination
 
     for (int i = 0; i < N; i++)
     {
@@ -91,11 +91,11 @@ int main()
     xMean = sumX / N;
     yMean = sumY / N;
 
-    // Calculate correlation coefficient (r)
+    // Calculate correlation coefficient (r) & coefficient of determination (r squared)
     float rNumer = (N*sumXY)-(sumX*sumY);
     float rDenom = sqrt(((N*sumXSq)-(sqSumX))*((N*sumYSq)-sqSumY));
-    r = rNumer/rDenom;
-    rSq = pow(r, 2);
+    correlationCoefficient = rNumer/rDenom;
+    coefficientOfDetermination = pow(correlationCoefficient, 2) * 100;
 
     for (int i = 0; i < N; i++)
     {
@@ -117,8 +117,8 @@ int main()
     printf("y = %0.2f + %0.2fx\n", b0, b1);
     printf("sum of x and y: %0.2f and %0.2f\n", sumX, sumY);
     printf("Mean of x and y: %0.2f and %0.2f\n", xMean, yMean);
-    printf("The correlation coefficient is %0.2f\n", r);
-    printf("The coefficient of determination is %0.2f\n", rSq);
+    printf("The correlation coefficient is %0.2f\n", correlationCoefficient);
+    printf("The coefficient of determination is %0.2f%%\n", coefficientOfDetermination);
 
     plotGraph(b1, b0);
 
