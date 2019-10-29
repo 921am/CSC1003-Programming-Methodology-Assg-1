@@ -7,7 +7,7 @@
 #define N 10000 // The amount of values in the dataset
 
 char DATASET_FILEPATH[1000];
-float coordX[N], coordY[N];
+float X_VALUES[N], Y_VALUES[N];
 
 void readDataFromFile();
 void plotGraph(float slope, float yIntercept);
@@ -21,8 +21,8 @@ int main()
 
     for (int i = 0; i < N; i++)
     {
-        float x = coordX[i];
-        float y = coordY[i];
+        float x = X_VALUES[i];
+        float y = Y_VALUES[i];
 
         // calculate all summations needed
         sumX += x;
@@ -50,8 +50,8 @@ int main()
     for (int i = 0; i < N; i++)
     {
         //calculate x-xMean and y-yMean
-        float xMinusXMean = coordX[i] - xMean;
-        float yMinusYMean = coordY[i] - yMean;
+        float xMinusXMean = X_VALUES[i] - xMean;
+        float yMinusYMean = Y_VALUES[i] - yMean;
 
         //calculate the numerator & denominator of regression slope equation
         slopeNumer += xMinusXMean * yMinusYMean;
@@ -112,12 +112,12 @@ void readDataFromFile()
         // walk through other tokens while the token is null
         while( y != NULL ) {
             //printf( " %s\n", token );
-            coordY[count] = (float)atof(y); //store token to the coordY for every count
+            Y_VALUES[count] = (float)atof(y); //store token to the Y_VALUES for every count
             y = strtok(NULL, delim); //make the token null after storing
         }
 
-        //store the x coorindates in array coordX
-        coordX[count] = (float)atof(x);
+        //store the x coorindates in array X_VALUES
+        X_VALUES[count] = (float)atof(x);
 
         //take next character from file.
         countChar = getc(fptr);
