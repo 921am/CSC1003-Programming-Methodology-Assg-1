@@ -152,7 +152,6 @@ void plotGraph(float slope, float yIntercept)
     fprintf(gp, "set datafile separator comma\n");
     fprintf(gp, "f(x) = m*x + b\n");
     fprintf(gp, "set fit quiet\n"); // disables automatic output values from GNUPlot
-    fprintf(gp, "set fit logfile '/dev/null'\n"); // disables GNUPlot from generating a logfile
     fprintf(gp, "fit f(x) '%s' using 1:2 via m, b\n", DATASET_FILEPATH);
     fprintf(gp, "plot '%s', f(x) title 'Regression Line y=%0.2fx+%0.2f'\n", DATASET_FILEPATH, slope, yIntercept);
     fclose(gp);
