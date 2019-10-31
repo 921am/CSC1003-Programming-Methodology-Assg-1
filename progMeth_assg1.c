@@ -97,7 +97,7 @@ void readDataFromFile()
     scanf("%s", &DATASET_FILEPATH);
     fptr = fopen(DATASET_FILEPATH, "r");
 
-    // file path of Mag's desktop - /Users/magdalene/Desktop/SIT-UofG/programMeth/progMeth_assg1/Group9_15.txt
+    // file path of Mag's desktop (file path for testing)- /Users/magdalene/Desktop/SIT-UofG/programMeth/progMeth_assg1/Group9_15.txt
     if (fptr == NULL)
     {
         printf("ERROR! Please try again. Unable to read the following file from path: %s", DATASET_FILEPATH);
