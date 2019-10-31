@@ -100,7 +100,7 @@ void readDataFromFile()
     // file path of Mag's desktop - /Users/magdalene/Desktop/SIT-UofG/programMeth/progMeth_assg1/Group9_15.txt
     if (fptr == NULL)
     {
-        printf("Error! opening file\n");
+        printf("ERROR! Please try again. Unable to read the following file from path: %s", DATASET_FILEPATH);
         // Program exits if file pointer returns NULL.
         exit(1);
     }
@@ -152,6 +152,7 @@ void plotGraph(float slope, float yIntercept)
     fprintf(gp, "set datafile separator comma\n");
     fprintf(gp, "f(x) = m*x + b\n");
     fprintf(gp, "set fit quiet\n"); // disables automatic output values from GNUPlot
+    //fprintf(gp, "set fit logfile '/dev/null'\n"); // disables GNUPlot from generating a logfile
     fprintf(gp, "fit f(x) '%s' using 1:2 via m, b\n", DATASET_FILEPATH);
     fprintf(gp, "plot '%s', f(x) title 'Regression Line y=%0.2fx+%0.2f'\n", DATASET_FILEPATH, slope, yIntercept);
     fclose(gp);
