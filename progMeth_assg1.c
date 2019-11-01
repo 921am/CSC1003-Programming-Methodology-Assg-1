@@ -23,7 +23,7 @@ int main()
     float sumXY, sumXSq, sumYSq, sqSumX, sqSumY, correlationCoefficient, coefficientOfDetermination;
     
     // variables needed for calculating standard error
-    float stdError, stdDev, stdDevNumer;
+    float stdError, stdErrorNumer;
 
     for (int i = 0; i < N; i++)
     {
@@ -64,9 +64,8 @@ int main()
     }
 
     // calculate standard error
-    stdDevNumer = slopeDenom; // the numerator for the standard deviation equation is the same as the denominator of regression slope equation
-    stdDev = sqrt(stdDevNumer / (N-1));
-    stdError = stdDev/sqrt(N);
+    stdErrorNumer = slopeDenom; // the numerator for the standard error equation is the same as the denominator of regression slope equation
+    stdError = sqrt(stdErrorNumer/(N-2));
 
     //calculate b0 (y-intercept) and b1 (slope) of regression line
     b1 = slopeNumer / slopeDenom;
