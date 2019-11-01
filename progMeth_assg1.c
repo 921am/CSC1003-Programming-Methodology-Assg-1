@@ -65,7 +65,7 @@ int main()
 
     // calculate standard error
     stdErrorNumer = slopeDenom; // the numerator for the standard error equation is the same as the denominator of regression slope equation
-    stdError = sqrt(stdErrorNumer/(N-2));
+    stdError = sqrt(stdErrorNumer/(N-1));
 
     //calculate b0 (y-intercept) and b1 (slope) of regression line
     b1 = slopeNumer / slopeDenom;
